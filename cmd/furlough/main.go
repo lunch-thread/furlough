@@ -26,6 +26,8 @@ func main() {
 			log.Println("connecting")
 		case *slack.InvalidAuthEvent:
 			log.Fatalln("invalid auth token")
+		case *slack.ConnectionErrorEvent:
+			log.Println("connection error:", e.Error())
 		case *slack.UserChangeEvent:
 			log.Printf("user %s changed\n", e.User.Name)
 		}
