@@ -25,7 +25,7 @@ func main() {
 	for msg := range rtm.IncomingEvents {
 		if err := e.Encode(map[string]interface{}{
 			"@timestamp": time.Now().Format(time.RFC3339Nano),
-			"msg":        msg.Data,
+			"msg":        msg,
 		}); err != nil {
 			panic(err)
 		}
