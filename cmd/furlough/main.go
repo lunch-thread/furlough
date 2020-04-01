@@ -29,7 +29,7 @@ func main() {
 		case *slack.ConnectionErrorEvent:
 			log.Println("connection error:", e.Error())
 		case *slack.UserChangeEvent:
-			log.Printf("user %s changed\n", e.User.Name)
+			log.Printf("user %s changed, deleted: %t\n", e.User.Name, e.User.Deleted)
 		}
 	}
 }
