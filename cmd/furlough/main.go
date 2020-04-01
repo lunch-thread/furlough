@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	token := os.Args[len(os.Args)-1]
+	token := os.Getenv("TOKEN")
 
 	if token == "" {
 		log.Fatal("token must be set")
