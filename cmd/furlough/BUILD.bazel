@@ -23,5 +23,5 @@ container_push(
    format = "Docker",
    registry = "docker.pkg.github.com",
    repository = "lunch-thread/furlough",
-   tag = "dev",
+   tag = "latest",
 )
