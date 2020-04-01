@@ -1,21 +1,21 @@
 package main
 
 import (
-	"flag"
 	"fmt"
 	"log"
+	"os"
 
 	"github.com/slack-go/slack"
 )
 
 func main() {
-	token := flag.String("token", "", "slack token")
-	flag.Parse()
-	if *token == "" {
+	token := os.Args[len(os.Args)-1]
+
+	if token == "" {
 		log.Fatal("token must be set")
 	}
 
-	rtm := slack.New(*token).NewRTM()
+	rtm := slack.New(token).NewRTM()
 
 	go rtm.ManageConnection()
 
