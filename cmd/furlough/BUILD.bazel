@@ -22,6 +22,6 @@ container_push(
    image = ":furlough",
    format = "Docker",
    registry = "docker.pkg.github.com",
-   repository = "lunch-thread/furlough",
+   repository = "lunch-thread/furlough/furlough",
    tag = "latest",
 )
