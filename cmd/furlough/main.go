@@ -32,7 +32,6 @@ func main() {
 		}
 
 		switch e := msg.Data.(type) {
-		case *slack.ConnectingEvent:
 		case *slack.InvalidAuthEvent:
 			log.Fatalln("invalid auth token")
 		case *slack.ConnectionErrorEvent:
