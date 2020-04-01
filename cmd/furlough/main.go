@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os"
 
@@ -20,11 +19,15 @@ func main() {
 	go rtm.ManageConnection()
 
 	for msg := range rtm.IncomingEvents {
-		e, ok := msg.Data.(*slack.UserChangeEvent)
-		if !ok {
-			continue
-		}
+		log.Printf("got message %s\n", msg.Type)
 
-		fmt.Printf("user %s changed\n", e.User.Name)
+		switch e := msg.Data.(type) {
+		case *slack.ConnectingEvent:
+			log.Println("connecting")
+		case *slack.InvalidAuthEvent:
+			log.Fatalln("invalid auth token")
+		case *slack.UserChangeEvent:
+			log.Printf("user %s changed\n", e.User.Name)
+		}
 	}
 }
