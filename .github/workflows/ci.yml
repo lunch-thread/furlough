@@ -20,8 +20,6 @@ jobs:
           chmod +x "${GITHUB_WORKSPACE}/bin/bazel"
 
       - run: bazel build //...
-      - run: |
-          bazel test //...
-          [[ "$?" != 0 || "$?" != 4 ]]
+      # - run: bazel test //...
       - run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login ${{ secrets.DOCKER_REGISTRY_URL }} -u ${{ secrets.DOCKER_USERNAME }} --password-stdin
       - run: bazel run //cmd/furlough:push
