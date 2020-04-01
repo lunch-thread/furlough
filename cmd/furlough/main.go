@@ -1,8 +1,10 @@
 package main
 
 import (
+	"encoding/json"
 	"log"
 	"os"
+	"time"
 
 	"github.com/slack-go/slack"
 )
@@ -18,18 +20,22 @@ func main() {
 
 	go rtm.ManageConnection()
 
+	e := json.NewEncoder(os.Stdout)
+
 	for msg := range rtm.IncomingEvents {
-		log.Printf("got message %s\n", msg.Type)
+		if err := e.Encode(map[string]interface{}{
+			"@timestamp": time.Now().Format(time.RFC3339Nano),
+			"msg":        msg.Data,
+		}); err != nil {
+			panic(err)
+		}
 
 		switch e := msg.Data.(type) {
 		case *slack.ConnectingEvent:
-			log.Println("connecting")
 		case *slack.InvalidAuthEvent:
 			log.Fatalln("invalid auth token")
 		case *slack.ConnectionErrorEvent:
-			log.Println("connection error:", e.Error())
-		case *slack.UserChangeEvent:
-			log.Printf("user %s changed, deleted: %t\n", e.User.Name, e.User.Deleted)
+			log.Fatalf("connection error: %v\n", e)
 		}
 	}
 }
