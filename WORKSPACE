@@ -55,10 +55,65 @@ load(
 container_repositories()
 
 load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive")
-
 load(
     "@io_bazel_rules_docker//go:image.bzl",
     _go_image_repos = "repositories",
 )
 
 _go_image_repos()
+
+go_repository(
+    name = "com_github_slack_go_slack",
+    importpath = "github.com/slack-go/slack",
+    sum = "h1:qU037g8gQ71EuH6S9zYKnvYrEUj0fLFH4HFekFqBoRU=",
+    version = "v0.6.3",
+)
+
+go_repository(
+    name = "com_github_davecgh_go_spew",
+    importpath = "github.com/davecgh/go-spew",
+    sum = "h1:vj9j/u1bqnvCEfJOwUhtlOARqs3+rkHYY13jYWTU97c=",
+    version = "v1.1.1",
+)
+
+go_repository(
+    name = "com_github_go_test_deep",
+    importpath = "github.com/go-test/deep",
+    sum = "h1:u2CU3YKy9I2pmu9pX0eq50wCgjfGIt539SqR7FbHiho=",
+    version = "v1.0.4",
+)
+
+go_repository(
+    name = "com_github_gorilla_websocket",
+    importpath = "github.com/gorilla/websocket",
+    sum = "h1:VJtLvh6VQym50czpZzx07z/kw9EgAxI3x1ZB8taTMQQ=",
+    version = "v1.2.0",
+)
+
+go_repository(
+    name = "com_github_nlopes_slack",
+    importpath = "github.com/nlopes/slack",
+    sum = "h1:jt0jxVQGhssx1Ib7naAOZEZcGdtIhTzkP0nopK0AsRA=",
+    version = "v0.6.0",
+)
+
+go_repository(
+    name = "com_github_pkg_errors",
+    importpath = "github.com/pkg/errors",
+    sum = "h1:WdK/asTD0HN+q6hsWO3/vpuAkAr+tw6aNJNDFFf0+qw=",
+    version = "v0.8.0",
+)
+
+go_repository(
+    name = "com_github_pmezard_go_difflib",
+    importpath = "github.com/pmezard/go-difflib",
+    sum = "h1:4DBwDE0NGyQoBHbLQYPwSUPoCMWR5BEzIk/f1lZbAQM=",
+    version = "v1.0.0",
+)
+
+go_repository(
+    name = "com_github_stretchr_testify",
+    importpath = "github.com/stretchr/testify",
+    sum = "h1:bSDNvY7ZPG5RlJ8otE/7V6gMiyenm9RtJ7IUVIAoJ1w=",
+    version = "v1.2.2",
+)
