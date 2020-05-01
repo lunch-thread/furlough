@@ -2,29 +2,38 @@ load("@io_bazel_rules_go//go:def.bzl", "go_library")
 
 go_library(
     name = "go_default_library",
-    srcs = ["main.go"],
+    srcs = [
+        "list.go",
+        "listen.go",
+        "main.go",
+    ],
     importpath = "github.com/lunch-thread/furlough/cmd/furlough",
     visibility = ["//visibility:private"],
-    deps = ["@com_github_slack_go_slack//:go_default_library"],
+    deps = ["@com_github_nlopes_slack//:go_default_library"],
 )
 
 load("@io_bazel_rules_docker//go:image.bzl", "go_image")
 
 go_image(
     name = "furlough",
-    srcs = ["main.go"],
+    srcs = [
+        "list.go",
+        "listen.go",
+        "main.go",
+    ],
     importpath = "github.com/lunch-thread/furlough/cmd/furlough",
     visibility = ["//visibility:private"],
     deps = ["@com_github_slack_go_slack//:go_default_library"],
+    goarch = "amd64",
+    goos = "linux",
 )
 
-load("@io_bazel_rules_docker//container:container.bzl", "container_push")
+load("@io_bazel_rules_docker//docker:docker.bzl", "docker_push")
 
-container_push(
+docker_push(
     name = "push",
     image = ":furlough",
-    format = "Docker",
     registry = "docker.pkg.github.com",
     repository = "lunch-thread/furlough/furlough",
-    tag = "latest",
+    tag = "{BUILD_TIMESTAMP}",
 )

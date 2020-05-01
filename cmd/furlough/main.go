@@ -1,41 +1,34 @@
 package main
 
 import (
-	"encoding/json"
+	"context"
+	"flag"
+	"fmt"
 	"log"
 	"os"
-	"time"
-
-	"github.com/slack-go/slack"
 )
 
-func main() {
+func Main(ctx context.Context) error {
 	token := os.Getenv("TOKEN")
 
 	if token == "" {
 		log.Fatal("token must be set")
 	}
 
-	rtm := slack.New(token).NewRTM()
+	flag.Parse()
 
-	go rtm.ManageConnection()
+	switch cmd := flag.Arg(0); cmd {
+	case "", "listen":
+		return listen(ctx, token)
+	case "list":
+		return list(ctx, token)
+	default:
+		return fmt.Errorf("unknown command: %s", cmd)
+	}
+}
 
-	e := json.NewEncoder(os.Stdout)
-
-	for msg := range rtm.IncomingEvents {
-		if err := e.Encode(map[string]interface{}{
-			"@timestamp": time.Now().Format(time.RFC3339Nano),
-			"type":       msg.Type,
-			"data":       msg.Data,
-		}); err != nil {
-			panic(err)
-		}
-
-		switch e := msg.Data.(type) {
-		case *slack.InvalidAuthEvent:
-			log.Fatalln("invalid auth token")
-		case *slack.ConnectionErrorEvent:
-			log.Fatalf("connection error: %v\n", e)
-		}
+func main() {
+	if err := Main(context.Background()); err != nil {
+		log.Fatal(err)
 	}
 }
