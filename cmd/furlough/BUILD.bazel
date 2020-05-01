@@ -9,7 +9,7 @@ go_library(
     ],
     importpath = "github.com/lunch-thread/furlough/cmd/furlough",
     visibility = ["//visibility:private"],
-    deps = ["@com_github_nlopes_slack//:go_default_library"],
+    deps = ["@com_github_slack_go_slack//:go_default_library"],
 )
 
 load("@io_bazel_rules_docker//go:image.bzl", "go_image")
