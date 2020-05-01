@@ -3,6 +3,7 @@ package main
 import (
 	"context"
 	"fmt"
+	"net/http"
 	"sort"
 
 	"github.com/slack-go/slack"
@@ -28,8 +29,8 @@ func list(ctx context.Context, token string) error {
 	// filter for only deactivated accounts and not bots
 	for _, u := range us {
 		if !u.IsBot && u.Deleted {
-			const layout = "Jan _2 06 15:04:05"
-			fmt.Printf("%s %s\n", u.Updated.Time().Format(layout), u.Name)
+			// const layout = "Jan _2 06 15:04:05"
+			fmt.Printf("%s %s\n", u.Updated.Time().Format(http.TimeFormat), u.Name)
 		}
 	}
 
